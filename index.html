@@ -4,245 +4,375 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Home - Classroom</title>
 
-  <!-- Wider Google Classroom-style favicon: thick yellow frame, green board, one white person -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='12' fill='%23fbbc04'/%3E%3Crect x='18' y='13' width='84' height='74' rx='8' fill='%234caf65' stroke='%23e5ad00' stroke-width='5'/%3E%3Ccircle cx='60' cy='36' r='11' fill='white'/%3E%3Cpath d='M34 76c1-16 11-25 26-25s25 9 26 25z' fill='white'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='20' fill='%23fbbc04'/%3E%3Crect x='9' y='9' width='102' height='82' rx='13' fill='%2334a853' stroke='%23fbbc04' stroke-width='5'/%3E%3Ccircle cx='60' cy='34' r='12' fill='white'/%3E%3Cpath d='M35 77 Q35 53 60 53 Q85 53 85 77 Z' fill='white'/%3E%3C/svg%3E">
 
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      width: 100%;
+    * {
+      box-sizing: border-box;
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
-      padding: 20px;
       font-family: Arial, Helvetica, sans-serif;
       color: white;
-      background: linear-gradient(135deg, #17133e, #30216b, #1265a8);
-      overflow-x: hidden;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 1500px;
-      margin: 0 auto;
+      background: linear-gradient(135deg, #17152f, #302064, #123b70);
     }
 
     header {
       text-align: center;
-      margin-bottom: 18px;
+      padding: 25px 16px 18px;
     }
 
     header h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 5vw, 44px);
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      background: linear-gradient(90deg, #c6a5ff, #69d6ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     header p {
-      margin: 0;
-      color: #dedcff;
+      color: #d9d8ff;
+      margin: 9px 0 12px;
     }
 
     #clock {
-      text-align: center;
-      margin: 14px 0 18px;
-      font-size: 15px;
+      color: #bceaff;
+      font-size: 14px;
     }
 
-    .tabs {
+    main {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 10px 18px 35px;
+    }
+
+    .section-heading {
+      margin: 12px 0 17px;
+      font-size: 21px;
+    }
+
+    .gallery {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 18px;
     }
 
-    .tab {
-      padding: 14px 8px;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 12px;
-      background: rgba(255,255,255,.10);
+    .game-card {
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 15px;
+      background: #ffffff;
+      color: #17152f;
+      box-shadow: 0 8px 22px #00000035;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px #00000050;
+    }
+
+    .cover {
+      position: relative;
+      height: 155px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      isolation: isolate;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #ffffff35, transparent 48%, #00000030);
+      z-index: -1;
+    }
+
+    .cover-icon {
+      font-size: clamp(54px, 7vw, 86px);
+      line-height: 1;
+      filter: drop-shadow(0 7px 4px #00000030);
+    }
+
+    .cover-label {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 10px;
+      font-weight: 900;
+      font-size: clamp(13px, 1.5vw, 18px);
+      text-shadow: 0 2px 3px #00000060;
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .duckmath {
+      background: linear-gradient(135deg, #ffb74d, #ff5d67, #783cff);
+    }
+
+    .totally {
+      background: linear-gradient(135deg, #7ed957, #218c56, #155d91);
+    }
+
+    .completely {
+      background: linear-gradient(135deg, #ffd15c, #ff7b3d, #e53d81, #523bce);
+    }
+
+    .dogeub {
+      background: linear-gradient(135deg, #37f1d0, #3a8dff, #6443d9);
+    }
+
+    .elastic {
+      background: linear-gradient(135deg, #ff76a9, #a34cff, #3829a6);
+    }
+
+    .website-tile {
+      display: block;
+      width: 100%;
+      padding: 13px 8px;
+      border: 0;
+      border-top: 1px solid #e7e4f5;
+      background: white;
+      color: #302064;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 800;
       cursor: pointer;
-      overflow-wrap: anywhere;
-      transition: background .2s, transform .2s;
+      transition: background 0.18s, color 0.18s;
     }
 
-    .tab:hover {
-      background: rgba(255,255,255,.20);
-      transform: translateY(-1px);
+    .website-tile:hover {
+      background: #ece8ff;
+      color: #6337d8;
     }
 
-    .tab.active {
-      background: #7663ef;
-      border-color: #b8aaff;
-      box-shadow: 0 0 14px rgba(145,125,255,.35);
+    .website-tile.active {
+      color: white;
+      background: linear-gradient(90deg, #7448e8, #278ee8);
     }
 
     .viewer {
-      width: 100%;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.25);
+      margin-top: 30px;
+      border: 1px solid #ffffff30;
       border-radius: 16px;
-      background: rgba(12,10,35,.8);
-      box-shadow: 0 12px 35px rgba(0,0,0,.25);
+      overflow: hidden;
+      background: #14132b;
+      box-shadow: 0 10px 30px #00000035;
     }
 
     .toolbar {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
       gap: 9px;
-      padding: 12px;
-      background: rgba(0,0,0,.20);
+      flex-wrap: wrap;
+      padding: 13px;
+      background: #201b43;
     }
 
-    #siteName {
-      flex: 1 1 150px;
-      min-width: 0;
+    #currentSite {
+      flex: 1;
+      min-width: 130px;
+      font-size: 17px;
       font-weight: bold;
-      font-size: 16px;
-      overflow-wrap: anywhere;
     }
 
     .toolbar button {
       border: 0;
       border-radius: 8px;
       padding: 10px 13px;
-      background: #6654d9;
       color: white;
+      background: #6346c8;
       font-weight: bold;
       cursor: pointer;
     }
 
     .toolbar button:hover {
-      background: #8574f4;
+      background: #8068e9;
     }
 
-    .frame-wrap {
-      width: 100%;
-      height: clamp(400px, 72vh, 1000px);
-      min-height: 350px;
-      background: white;
+    .toolbar .open-button {
+      background: #147cb8;
     }
 
-    iframe {
+    .toolbar .open-button:hover {
+      background: #209cdb;
+    }
+
+    #gameFrame {
       display: block;
       width: 100%;
-      height: 100%;
+      height: 650px;
       border: 0;
       background: white;
     }
 
     .hint {
-      padding: 11px 14px;
-      color: #dedcff;
+      padding: 12px 15px;
+      margin: 0;
+      color: #c8c4e8;
       font-size: 13px;
       line-height: 1.5;
-      text-align: center;
-    }
-
-    footer {
-      padding: 18px 0 4px;
-      text-align: center;
-      color: #d5d1ff;
-      font-size: 12px;
     }
 
     .viewer:fullscreen {
-      width: 100%;
-      height: 100%;
-      border-radius: 0;
       display: flex;
       flex-direction: column;
-      background: #17133e;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
+      background: #14132b;
     }
 
-    .viewer:fullscreen .frame-wrap {
+    .viewer:fullscreen #gameFrame {
       flex: 1;
       height: auto;
       min-height: 0;
     }
 
+    .viewer:fullscreen .hint {
+      display: none;
+    }
+
     @media (max-width: 850px) {
-      .tabs {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .gallery {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      #gameFrame {
+        height: 560px;
       }
     }
 
     @media (max-width: 600px) {
-      body { padding: 12px; }
-
-      .tabs {
-        grid-template-columns: 1fr;
-        gap: 8px;
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
       }
 
-      .tab { padding: 12px; }
+      .cover {
+        height: 125px;
+      }
 
-      .toolbar { gap: 8px; }
+      main {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
 
-      .toolbar button { flex: 1 1 auto; }
+      #gameFrame {
+        height: 470px;
+      }
 
-      .frame-wrap {
-        height: 70vh;
-        height: 70dvh;
-        min-height: 350px;
+      .toolbar button {
+        padding: 9px 10px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .gallery {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="app">
-    <header>
-      <h1>🎮 Arcade Corner</h1>
-      <p>Choose a website below</p>
-    </header>
+  <header>
+    <h1>🎮 Arcade Corner</h1>
+    <p>Choose a website below and start playing!</p>
+    <div id="clock">Loading clock...</div>
+  </header>
 
-    <div id="clock"></div>
+  <main>
+    <h2 class="section-heading">🎲 Game Websites</h2>
 
-    <nav class="tabs" aria-label="Websites">
-      <button class="tab active" data-site="duckmath" aria-pressed="true">DuckMath</button>
-      <button class="tab" data-site="totallyScience" aria-pressed="false">Totally Science</button>
-      <button class="tab" data-site="completelyScience" aria-pressed="false">Completely Science</button>
-      <button class="tab" data-site="dogeub" aria-pressed="false">Dogeub</button>
-    </nav>
+    <section class="gallery" aria-label="Game websites">
+      <article class="game-card">
+        <div class="cover duckmath">
+          <div class="cover-icon">🦆</div>
+          <div class="cover-label">DUCKMATH</div>
+        </div>
+        <button class="website-tile active" data-site="duckmath">
+          DuckMath
+        </button>
+      </article>
+
+      <article class="game-card">
+        <div class="cover totally">
+          <div class="cover-icon">🌎</div>
+          <div class="cover-label">TOTALLY SCIENCE</div>
+        </div>
+        <button class="website-tile" data-site="totallyScience">
+          Totally Science
+        </button>
+      </article>
+
+      <article class="game-card">
+        <div class="cover completely">
+          <div class="cover-icon">🚀</div>
+          <div class="cover-label">COMPLETELY SCIENCE</div>
+        </div>
+        <button class="website-tile" data-site="completelyScience">
+          Completely Science
+        </button>
+      </article>
+
+      <article class="game-card">
+        <div class="cover dogeub">
+          <div class="cover-icon">🎮</div>
+          <div class="cover-label">DOGEUB</div>
+        </div>
+        <button class="website-tile" data-site="dogeub">
+          Dogeub
+        </button>
+      </article>
+
+      <article class="game-card">
+        <div class="cover elastic">
+          <div class="cover-icon">🤪</div>
+          <div class="cover-label">ELASTIC FACE</div>
+        </div>
+        <button class="website-tile" data-site="elasticFace">
+          Elastic Face
+        </button>
+      </article>
+    </section>
 
     <section class="viewer" id="viewer">
       <div class="toolbar">
-        <div id="siteName">DuckMath</div>
-        <button id="refreshBtn" type="button">↻ Refresh</button>
-        <button id="openBtn" type="button">↗ Open Link</button>
-        <button id="fullscreenBtn" type="button">⛶ Full Screen</button>
-        <button id="exitFullscreenBtn" type="button" hidden>✕ Exit</button>
+        <span id="currentSite">DuckMath</span>
+        <button id="refreshButton" type="button">↻ Refresh</button>
+        <button id="openButton" class="open-button" type="button">
+          ↗ Open Link
+        </button>
+        <button id="fullscreenButton" type="button">⛶ Full Screen</button>
+        <button id="exitFullscreenButton" type="button" hidden>
+          ✕ Exit
+        </button>
       </div>
 
-      <div class="frame-wrap">
-        <iframe
-          id="siteFrame"
-          src="https://duckmath.cloud/"
-          title="DuckMath"
-          allowfullscreen
-          loading="eager"
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
-      </div>
+      <iframe
+        id="gameFrame"
+        src="https://duckmath.cloud/"
+        title="Selected website"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
 
-      <div class="hint">
-        If a website does not load inside the frame, try “Open Link.”
-        Some websites block being displayed inside another website.
-      </div>
+      <p class="hint">
+        If a website does not load here, it may block embedded viewing.
+        Use Open Link to try it in a separate tab.
+      </p>
     </section>
-
-    <footer>Arcade Corner</footer>
   </main>
 
   <script>
@@ -262,108 +392,114 @@
       dogeub: {
         name: "Dogeub",
         url: "https://d1ks901xvjj2p6.cloudfront.net/index.html#/docs"
+      },
+      elasticFace: {
+        name: "Elastic Face",
+        url: "https://d21u3ic0kp9e91.cloudfront.net/elasticman/0/index.html"
       }
     };
 
-    const frame = document.getElementById("siteFrame");
-    const siteName = document.getElementById("siteName");
+    const frame = document.getElementById("gameFrame");
+    const currentSite = document.getElementById("currentSite");
     const viewer = document.getElementById("viewer");
-    const fullscreenBtn = document.getElementById("fullscreenBtn");
-    const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
-    const tabs = document.querySelectorAll(".tab");
+    const fullButton = document.getElementById("fullscreenButton");
+    const exitButton = document.getElementById("exitFullscreenButton");
+    const tileButtons = document.querySelectorAll(".website-tile");
 
-    let currentSite = "duckmath";
+    let activeSite = "duckmath";
 
-    function loadSite(key) {
-      const site = sites[key];
+    function selectSite(siteKey) {
+      const site = sites[siteKey];
       if (!site) return;
 
-      currentSite = key;
-      frame.src = site.url;
+      activeSite = siteKey;
+      currentSite.textContent = site.name;
       frame.title = site.name;
-      siteName.textContent = site.name;
+      frame.src = site.url;
 
-      tabs.forEach(tab => {
-        const selected = tab.dataset.site === key;
-        tab.classList.toggle("active", selected);
-        tab.setAttribute("aria-pressed", String(selected));
+      tileButtons.forEach(button => {
+        const selected = button.dataset.site === siteKey;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
       });
     }
 
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => loadSite(tab.dataset.site));
+    tileButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        selectSite(button.dataset.site);
+      });
     });
 
-    document.getElementById("refreshBtn").addEventListener("click", () => {
-      frame.src = sites[currentSite].url;
+    document.getElementById("refreshButton").addEventListener("click", () => {
+      frame.src = sites[activeSite].url;
     });
 
-    document.getElementById("openBtn").addEventListener("click", () => {
-      window.open(sites[currentSite].url, "_blank", "noopener,noreferrer");
+    document.getElementById("openButton").addEventListener("click", () => {
+      window.open(sites[activeSite].url, "_blank", "noopener,noreferrer");
     });
 
-    function updateFullscreenButtons() {
-      const active = document.fullscreenElement === viewer;
-      fullscreenBtn.hidden = active;
-      exitFullscreenBtn.hidden = !active;
-    }
-
-    fullscreenBtn.addEventListener("click", async () => {
+    fullButton.addEventListener("click", async () => {
       try {
         if (viewer.requestFullscreen) {
           await viewer.requestFullscreen();
         } else {
           viewer.classList.add("fallback-fullscreen");
-          Object.assign(viewer.style, {
-            position: "fixed",
-            inset: "0",
-            zIndex: "9999",
-            width: "100%",
-            height: "100%",
-            borderRadius: "0",
-            display: "flex",
-            flexDirection: "column"
-          });
-
-          Object.assign(viewer.querySelector(".frame-wrap").style, {
-            flex: "1",
-            height: "auto",
-            minHeight: "0"
-          });
-
-          fullscreenBtn.hidden = true;
-          exitFullscreenBtn.hidden = false;
+          viewer.style.position = "fixed";
+          viewer.style.inset = "0";
+          viewer.style.zIndex = "9999";
+          viewer.style.width = "100%";
+          viewer.style.height = "100%";
+          viewer.style.margin = "0";
+          viewer.style.borderRadius = "0";
+          frame.style.height = "calc(100vh - 65px)";
         }
-      } catch {
-        alert("Fullscreen could not start. Try opening the website in a new tab.");
+      } catch (error) {
+        alert("Full screen could not start. Try pressing F11 instead.");
       }
 
       updateFullscreenButtons();
     });
 
-    function exitFullscreen() {
+    exitButton.addEventListener("click", async () => {
       if (document.fullscreenElement) {
-        document.exitFullscreen().catch(() => {});
+        await document.exitFullscreen();
+      } else {
+        resetFallbackFullscreen();
       }
+      updateFullscreenButtons();
+    });
 
-      if (viewer.classList.contains("fallback-fullscreen")) {
-        viewer.classList.remove("fallback-fullscreen");
-        viewer.removeAttribute("style");
-        viewer.querySelector(".frame-wrap").removeAttribute("style");
-      }
-
-      fullscreenBtn.hidden = false;
-      exitFullscreenBtn.hidden = true;
+    function resetFallbackFullscreen() {
+      viewer.classList.remove("fallback-fullscreen");
+      viewer.style.position = "";
+      viewer.style.inset = "";
+      viewer.style.zIndex = "";
+      viewer.style.width = "";
+      viewer.style.height = "";
+      viewer.style.margin = "";
+      viewer.style.borderRadius = "";
+      frame.style.height = "";
     }
 
-    exitFullscreenBtn.addEventListener("click", exitFullscreen);
+    function updateFullscreenButtons() {
+      const fallback = viewer.classList.contains("fallback-fullscreen");
+      const isFullscreen = Boolean(document.fullscreenElement) || fallback;
+      fullButton.hidden = isFullscreen;
+      exitButton.hidden = !isFullscreen;
+    }
+
     document.addEventListener("fullscreenchange", updateFullscreenButtons);
 
     function updateClock() {
       const now = new Date();
       document.getElementById("clock").textContent =
-        now.toLocaleDateString() + " • " +
-        now.toLocaleTimeString([], {
+        now.toLocaleDateString(undefined, {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        }) + " • " +
+        now.toLocaleTimeString(undefined, {
           hour: "numeric",
           minute: "2-digit",
           second: "2-digit"
