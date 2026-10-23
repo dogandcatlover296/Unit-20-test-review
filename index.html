@@ -5,15 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Browser tab cloak -->
+  <!-- Google Classroom tab cloak -->
   <title>Home - Classroom</title>
-  <link rel="icon" type="image/svg+xml"
-        href="https://www.gstatic.com/classroom/logo_square_rounded.svg">
+  <link rel="icon" type="image/png" href="./classroom-icon.png">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -171,31 +168,19 @@
       min-height: 0;
     }
 
-    .viewer:fullscreen iframe {
-      height: 100%;
-    }
-
     @media (max-width: 600px) {
-      body {
-        padding: 12px;
-      }
+      body { padding: 12px; }
 
       .tabs {
         grid-template-columns: 1fr;
         gap: 8px;
       }
 
-      .tab {
-        padding: 12px;
-      }
+      .tab { padding: 12px; }
 
-      .toolbar {
-        gap: 8px;
-      }
+      .toolbar { gap: 8px; }
 
-      .toolbar button {
-        flex: 1 1 auto;
-      }
+      .toolbar button { flex: 1 1 auto; }
 
       .frame-wrap {
         height: 70vh;
@@ -275,8 +260,6 @@
     const frame = document.getElementById("siteFrame");
     const siteName = document.getElementById("siteName");
     const viewer = document.getElementById("viewer");
-    const refreshBtn = document.getElementById("refreshBtn");
-    const openBtn = document.getElementById("openBtn");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
     const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
     const tabs = document.querySelectorAll(".tab");
@@ -303,18 +286,18 @@
       tab.addEventListener("click", () => loadSite(tab.dataset.site));
     });
 
-    refreshBtn.addEventListener("click", () => {
+    document.getElementById("refreshBtn").addEventListener("click", () => {
       frame.src = sites[currentSite].url;
     });
 
-    openBtn.addEventListener("click", () => {
+    document.getElementById("openBtn").addEventListener("click", () => {
       window.open(sites[currentSite].url, "_blank", "noopener,noreferrer");
     });
 
     function updateFullscreenButtons() {
-      const isFullscreen = document.fullscreenElement === viewer;
-      fullscreenBtn.hidden = isFullscreen;
-      exitFullscreenBtn.hidden = !isFullscreen;
+      const active = document.fullscreenElement === viewer;
+      fullscreenBtn.hidden = active;
+      exitFullscreenBtn.hidden = !active;
     }
 
     fullscreenBtn.addEventListener("click", async () => {
@@ -322,7 +305,7 @@
         if (viewer.requestFullscreen) {
           await viewer.requestFullscreen();
         } else {
-          viewer.classList.add("fullscreen-fallback");
+          viewer.classList.add("fallback-fullscreen");
           Object.assign(viewer.style, {
             position: "fixed",
             inset: "0",
@@ -334,8 +317,7 @@
             flexDirection: "column"
           });
 
-          const frameWrap = viewer.querySelector(".frame-wrap");
-          Object.assign(frameWrap.style, {
+          Object.assign(viewer.querySelector(".frame-wrap").style, {
             flex: "1",
             height: "auto",
             minHeight: "0"
@@ -344,8 +326,8 @@
           fullscreenBtn.hidden = true;
           exitFullscreenBtn.hidden = false;
         }
-      } catch (error) {
-        alert("Fullscreen could not be started. Try opening the website in a new tab.");
+      } catch {
+        alert("Fullscreen could not start. Try opening the website in a new tab.");
       }
 
       updateFullscreenButtons();
@@ -356,8 +338,8 @@
         document.exitFullscreen().catch(() => {});
       }
 
-      if (viewer.classList.contains("fullscreen-fallback")) {
-        viewer.classList.remove("fullscreen-fallback");
+      if (viewer.classList.contains("fallback-fullscreen")) {
+        viewer.classList.remove("fallback-fullscreen");
         viewer.removeAttribute("style");
         viewer.querySelector(".frame-wrap").removeAttribute("style");
       }
