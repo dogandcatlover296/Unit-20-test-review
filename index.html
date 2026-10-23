@@ -213,14 +213,20 @@
     <div id="clock"></div>
 
     <nav class="tabs" aria-label="Websites">
-      <button class="tab active" data-site="duckmath">Duckmath</button>
-      <button class="tab" data-site="totallyScience">Totally Science</button>
-      <button class="tab" data-site="completelyScience">Completely Science</button>
+      <button class="tab active" data-site="duckmath" aria-pressed="true">
+        DuckMath
+      </button>
+      <button class="tab" data-site="totallyScience" aria-pressed="false">
+        Totally Science
+      </button>
+      <button class="tab" data-site="completelyScience" aria-pressed="false">
+        Completely Science
+      </button>
     </nav>
 
     <section class="viewer" id="viewer">
       <div class="toolbar">
-        <div id="siteName">Duckmath</div>
+        <div id="siteName">DuckMath</div>
         <button id="refreshBtn" type="button">↻ Refresh</button>
         <button id="openBtn" type="button">↗ Open Link</button>
         <button id="fullscreenBtn" type="button">⛶ Full Screen</button>
@@ -230,8 +236,8 @@
       <div class="frame-wrap">
         <iframe
           id="siteFrame"
-          src="https://duckmath.org/"
-          title="Duckmath"
+          src="https://duckmath.cloud/"
+          title="DuckMath"
           allowfullscreen
           loading="eager"
           referrerpolicy="strict-origin-when-cross-origin">
@@ -244,16 +250,14 @@
       </div>
     </section>
 
-    <footer>
-      Arcade Corner
-    </footer>
+    <footer>Arcade Corner</footer>
   </main>
 
   <script>
     const sites = {
       duckmath: {
-        name: "Duckmath",
-        url: "https://duckmath.org/"
+        name: "DuckMath",
+        url: "https://duckmath.cloud/"
       },
       totallyScience: {
         name: "Totally Science",
@@ -293,9 +297,7 @@
     }
 
     tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        loadSite(tab.dataset.site);
-      });
+      tab.addEventListener("click", () => loadSite(tab.dataset.site));
     });
 
     refreshBtn.addEventListener("click", () => {
@@ -318,19 +320,23 @@
           await viewer.requestFullscreen();
         } else {
           viewer.classList.add("fullscreen-fallback");
-          viewer.style.position = "fixed";
-          viewer.style.inset = "0";
-          viewer.style.zIndex = "9999";
-          viewer.style.width = "100%";
-          viewer.style.height = "100%";
-          viewer.style.borderRadius = "0";
-          viewer.style.display = "flex";
-          viewer.style.flexDirection = "column";
+          Object.assign(viewer.style, {
+            position: "fixed",
+            inset: "0",
+            zIndex: "9999",
+            width: "100%",
+            height: "100%",
+            borderRadius: "0",
+            display: "flex",
+            flexDirection: "column"
+          });
 
           const frameWrap = viewer.querySelector(".frame-wrap");
-          frameWrap.style.flex = "1";
-          frameWrap.style.height = "auto";
-          frameWrap.style.minHeight = "0";
+          Object.assign(frameWrap.style, {
+            flex: "1",
+            height: "auto",
+            minHeight: "0"
+          });
 
           fullscreenBtn.hidden = true;
           exitFullscreenBtn.hidden = false;
@@ -338,6 +344,7 @@
       } catch (error) {
         alert("Fullscreen could not be started. Try opening the website in a new tab.");
       }
+
       updateFullscreenButtons();
     });
 
@@ -349,9 +356,7 @@
       if (viewer.classList.contains("fullscreen-fallback")) {
         viewer.classList.remove("fullscreen-fallback");
         viewer.removeAttribute("style");
-
-        const frameWrap = viewer.querySelector(".frame-wrap");
-        frameWrap.removeAttribute("style");
+        viewer.querySelector(".frame-wrap").removeAttribute("style");
       }
 
       fullscreenBtn.hidden = false;
@@ -359,7 +364,6 @@
     }
 
     exitFullscreenBtn.addEventListener("click", exitFullscreen);
-
     document.addEventListener("fullscreenchange", updateFullscreenButtons);
 
     function updateClock() {
